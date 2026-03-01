@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortly | Premium URL Shortener</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <nav>
+        <div class="logo">Shortly<span>.</span></div>
+        <ul>
+            <li><a href="#" class="active">Dashboard</a></li>
+            <li><a href="#shorten">Shorten</a></li>
+            <li><a href="#analytics">Analytics</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="shorten" class="hero">
+            <h1>Shorten Your <span>Links</span> Instantly.</h1>
+            <p>High-throughput, secure, and detailed analytics for every click.</p>
+
+            <div class="shorten-container glass">
+                <div class="input-group">
+                    <input type="text" id="longUrl" placeholder="Paste your long URL here...">
+                </div>
+                <div class="input-group custom-alias">
+                    <input type="text" id="customAlias" placeholder="Custom alias (optional)">
+                </div>
+                <button id="shortenBtn">Shorten Now <i class="fas fa-bolt"></i></button>
+            </div>
+
+            <div id="resultContainer" class="result-container glass hidden">
+                <p>Your short link is ready!</p>
+                <div class="result-link-box">
+                    <span id="shortUrlText"></span>
+                    <div class="result-actions">
+                        <button id="copyBtn" title="Copy"><i class="fas fa-copy"></i></button>
+                        <button id="viewResultAnalyticsBtn" title="View Analytics"><i
+                                class="fas fa-chart-line"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="analytics" class="analytics-section">
+            <div class="section-header">
+                <h2>Real-time <span>Analytics</span></h2>
+                <div class="search-analytics">
+                    <input type="text" id="searchCode" placeholder="Enter short code...">
+                    <button id="viewAnalyticsBtn">View <i class="fas fa-chart-line"></i></button>
+                </div>
+            </div>
+
+            <div id="analyticsDashboard" class="analytics-grid hidden">
+                <div class="card glass stat-card">
+                    <h3>Total Clicks</h3>
+                    <div id="totalClicks" class="stat-value">0</div>
+                </div>
+
+                <div class="card glass chart-card">
+                    <h3>Geo Breakdown</h3>
+                    <canvas id="geoChart"></canvas>
+                </div>
+
+                <div class="card glass chart-card">
+                    <h3>Device Distribution</h3>
+                    <canvas id="deviceChart"></canvas>
+                </div>
+
+                <div class="card glass chart-card">
+                    <h3>Browser Breakdown</h3>
+                    <canvas id="browserChart"></canvas>
+                </div>
+
+                <div class="card glass chart-card">
+                    <h3>Platform Distribution</h3>
+                    <canvas id="platformChart"></canvas>
+                </div>
+
+                <div class="card glass table-card">
+                    <h3>Recent Transitions</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>IP</th>
+                                <th>Country</th>
+                                <th>Device</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clicksTableBody">
+                            <!-- Data injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="noDataPlaceholder" class="placeholder glass">
+                <i class="fas fa-search"></i>
+                <p>Enter a short code to view detailed analytics.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Shortly. Built for speed and scale.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

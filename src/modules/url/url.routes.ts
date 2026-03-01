@@ -1,10 +1,10 @@
 import { Router } from "express";
-import express from "express";
-import { createShortUrl, getAllUrls, redirectToLongUrl } from "./url.controller";
+import { createShortUrl, getAllUrls } from "./url.controller";
 import { rateLimiter } from "../../middlewares/rateLimit.middleware";
+
 const router = Router();
 
-router.post("/",rateLimiter("create",2,60),createShortUrl);
-router.get("/", getAllUrls);
+router.post("/shorten", rateLimiter("create", 5, 60), createShortUrl);
+router.get("/list", getAllUrls);
 
 export default router;

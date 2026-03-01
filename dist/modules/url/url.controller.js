@@ -9,11 +9,14 @@ const createShortUrl = async (req, res) => {
         const body = url_schema_1.createUrlSchema.parse(req.body);
         const result = await service.createShortUrl(body.longUrl, body.customAlias);
         res.status(201).json({
-            shortUrl: `http://localhost:3000/${result.shortCode}`
+            id: result.id.toString(),
+            shortCode: result.shortCode,
+            longUrl: result.longUrl,
+            shortUrl: `${req.protocol}://${req.get("host")}/${result.shortCode}`
         });
     }
     catch (error) {
-        res.status(400).json({ error: error });
+        res.status(400).json({ error: error.message || error });
     }
 };
 exports.createShortUrl = createShortUrl;
@@ -29,15 +32,15 @@ const getAllUrls = async (req, res) => {
 exports.getAllUrls = getAllUrls;
 const redirectToLongUrl = async (req, res) => {
     const { shortCode } = req.params;
-    const result = await service.getLongUrl(shortCode);
-    console.log(result);
+    const trackingData = {
+        ip: req.ip || "unknown",
+        ua: req.get("user-agent") || "unknown",
+        referer: req.get("referer") || "Direct"
+    };
+    const result = await service.getLongUrl(shortCode, trackingData);
     if (!result) {
         return res.status(404).json({ message: "URL not found" });
     }
-    // 🔥 Async click tracking (fire & forget)
-    service
-        .incrementClicks(shortCode)
-        .catch(() => { }); // never block redirect
     return res.redirect(result.longUrl);
 };
 exports.redirectToLongUrl = redirectToLongUrl;
