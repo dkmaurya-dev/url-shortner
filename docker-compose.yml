@@ -18,6 +18,18 @@ services:
     container_name: url_redis
     ports:
       - "6379:6379"
+  url-shortner:
+    build: .
+    container_name: url_shortner
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - PORT=3001
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/url_shortener?schema=public
+      - REDIS_URL=redis://redis:6379
 
 volumes:
   postgres_data:

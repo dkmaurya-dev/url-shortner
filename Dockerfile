@@ -2,6 +2,9 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+# Install dependencies for Prisma and other native modules
+RUN apk add --no-cache libc6-compat openssl
+
 # 1️⃣ Copy package files
 COPY package*.json ./
 
@@ -9,13 +12,16 @@ COPY package*.json ./
 COPY prisma ./prisma
 
 # 3️⃣ Install deps
-RUN npm ci
+RUN npm install
 
 # 4️⃣ Copy rest of the app
 COPY . .
 
 # 5️⃣ Generate Prisma client (explicit)
 RUN npx prisma generate
+
+# 5.1️⃣ Build the app
+RUN npm run build
 
 # 6️⃣ Expose port
 EXPOSE 3000
